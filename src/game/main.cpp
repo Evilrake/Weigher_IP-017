@@ -1,11 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+using namespace std;
+using namespace sf;
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
+    RectangleShape bg;
+
+    Texture bgTexture;
+    if (!bgtexture.loadFromFile("images/bg.jpg")) {
+        cout << "Error, images/bg.jpg not found" << endl;
+    }
+    bg.setTexture(&bgTexture);
+    bg.setPosition(Vector2f(0, 0));
+    bg.setSize(Vector2f(window.getSize().x, window.getSize().y));
 
     while (window.isOpen()) {
         sf::Event event;
@@ -15,7 +25,7 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(bg);
         window.display();
     }
 
