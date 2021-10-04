@@ -9,7 +9,7 @@ int main()
 {
     RenderWindow window(sf::VideoMode(1000, 600), "Weigher game");
 
-        callMenu(window);
+        int difficult = callMenu(window);
 
     return 0;
 }

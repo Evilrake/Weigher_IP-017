@@ -5,9 +5,108 @@
 using namespace std;
 using namespace sf;
 
+int callChooseDifficultMenu(RenderWindow& window)
+{
+    int difficult = 0;
+
+    // bg
+    Texture texture;
+    if (!texture.loadFromFile("images/bg.jpg")) {
+        cout << "Error, images/bg.jpg not found" << endl;
+    }
+    RectangleShape bg = initBg(window);
+    bg.setTexture(&texture);
+
+    // Buttons
+    RectangleShape easyButton;
+    easyButton.setPosition(Vector2f(40, 40));
+    easyButton.setSize(Vector2f(300, 70));
+    easyButton.setFillColor(Color(0, 0, 0, 0));
+    easyButton.setOutlineColor(Color(80, 130, 255));
+    easyButton.setOutlineThickness(5);
+
+    RectangleShape middleButton;
+    middleButton.setPosition(Vector2f(40, 140));
+    middleButton.setSize(Vector2f(300, 70));
+    middleButton.setFillColor(Color(0, 0, 0, 0));
+    middleButton.setOutlineColor(Color(80, 130, 255));
+    middleButton.setOutlineThickness(5);
+
+    RectangleShape hardButton;
+    hardButton.setPosition(Vector2f(40, 240));
+    hardButton.setSize(Vector2f(300, 70));
+    hardButton.setFillColor(Color(0, 0, 0, 0));
+    hardButton.setOutlineColor(Color(80, 130, 255));
+    hardButton.setOutlineThickness(5);
+
+    // buttonText
+    Font font;
+    if (!font.loadFromFile("fonts/font.ttf")) {
+        cout << "Error, fonts/font.ttf not found" << endl;
+    }
+    Text easyButtonText;
+    easyButtonText.setFont(font);
+    easyButtonText.setCharacterSize(40);
+    easyButtonText.setFillColor(Color::Black);
+    easyButtonText.setPosition(Vector2f(50, 50));
+    easyButtonText.setString(L"Лёгкий");
+
+    Text middleButtonText;
+    middleButtonText.setFont(font);
+    middleButtonText.setCharacterSize(40);
+    middleButtonText.setFillColor(Color::Black);
+    middleButtonText.setPosition(Vector2f(50, 150));
+    middleButtonText.setString(L"Средний");
+
+    Text hardButtonText;
+    hardButtonText.setFont(font);
+    hardButtonText.setCharacterSize(40);
+    hardButtonText.setFillColor(Color::Black);
+    hardButtonText.setPosition(Vector2f(50, 250));
+    hardButtonText.setString(L"Трудный");
+
+    while (!difficult) {
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window.close();
+            }
+            if (event.type == Event::MouseButtonPressed) {
+                if (event.mouseButton.button == Mouse::Left) {
+                    if (easyButton.getGlobalBounds().contains(
+                                event.mouseButton.x, event.mouseButton.y)) {
+                        difficult = 1;
+                    }
+                    if (middleButton.getGlobalBounds().contains(
+                                event.mouseButton.x, event.mouseButton.y)) {
+                        difficult = 2;
+                    }
+                    if (hardButton.getGlobalBounds().contains(
+                                event.mouseButton.x, event.mouseButton.y)) {
+                        difficult = 3;
+                    }
+                }
+            }
+        }
+
+        window.clear();
+        window.draw(bg);
+        window.draw(easyButton);
+        window.draw(middleButton);
+        window.draw(hardButton);
+        window.draw(easyButtonText);
+        window.draw(middleButtonText);
+        window.draw(hardButtonText);
+        window.display();
+        sleep(milliseconds(1000 / 60));
+    }
+    return difficult;
+}
+
 int callMenu(RenderWindow& window)
 {
-	// bg
+    int difficult = 0;
+    // bg
     Texture texture;
     if (!texture.loadFromFile("images/bg.jpg")) {
         cout << "Error, images/bg.jpg not found" << endl;
@@ -36,6 +135,9 @@ int callMenu(RenderWindow& window)
     startButtonText.setString(L"Начать игру");
 
     while (window.isOpen()) {
+        if (difficult) {
+            break;
+        }
         Event event;
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed) {
@@ -45,7 +147,7 @@ int callMenu(RenderWindow& window)
                 if (event.mouseButton.button == Mouse::Left) {
                     if (startButton.getGlobalBounds().contains(
                                 event.mouseButton.x, event.mouseButton.y)) {
-                        cout << 1;
+                        difficult = callChooseDifficultMenu(window);
                     }
                 }
             }
@@ -58,5 +160,5 @@ int callMenu(RenderWindow& window)
         window.display();
         sleep(milliseconds(1000 / 60));
     }
-    return 0;
-    }
+    return difficult;
+}
