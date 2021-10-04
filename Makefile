@@ -8,11 +8,10 @@ SFML_LIBS = -lsfml-window -lsfml-system -lsfml-graphics -lfreetype
 SFML_PATH = thirdparty/SFML/lib
 SFML_INC = thirdparty/SFML/include
 SFML_TYPE = SFML_STATIC
-
 INCLUDE = -I $(SFML_INC) -I $(SRC_MENU) -I $(SRC_GAME)
 SFML = -DSFML_STATIC $(INCLUDE) -L $(SFML_PATH) $(SFML_LIBS)
 
-OBJECTS = $(OBJ_GAME)/main.o
+OBJECTS = $(OBJ_GAME)/main.o $(OBJ_GAME)/bg.o
 
 bin/weigher.exe: $(OBJECTS)
 	$(CXX) -o bin/weigher.exe $(OBJECTS) $(SFML)
@@ -20,16 +19,10 @@ bin/weigher.exe: $(OBJECTS)
 $(OBJ_GAME)/main.o: $(SRC_GAME)/main.cpp
 	$(CXX) $(CPPFLAGS) -c -o $(OBJ_GAME)/main.o $(SRC_GAME)/main.cpp $(SFML)
 
-$(OBJ_MENU)/game.a: $(OBJ_GAME)/main.o
-		ar rcs $@ $^
+$(OBJ_GAME)/bg.o: $(SRC_GAME)/bg.cpp
+	$(CXX) $(CPPFLAGS) -c -o $(OBJ_GAME)/bg.o $(SRC_GAME)/bg.cpp $(SFML)
 
-    
-          
-            
-    
+$(OBJ_MENU)/game.a: $(OBJ_GAME)/main.o $(OBJ_GAME)/bg.o
+	ar rcs $@ $^
 
-          
-    
-    
-  
--include main.d
+-include main.d bg.d

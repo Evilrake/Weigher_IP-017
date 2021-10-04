@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <bg.h>
 #include <iostream>
 
 using namespace std;
@@ -6,27 +7,26 @@ using namespace sf;
 
 int main()
 {
-    RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
-    RectangleShape bg;
+    RenderWindow window(sf::VideoMode(1000, 600), "Weigher game");
 
-    Texture bgTexture;
-    if (!bgtexture.loadFromFile("images/bg.jpg")) {
+    Texture texture;
+    if (!texture.loadFromFile("images/bg.jpg")) {
         cout << "Error, images/bg.jpg not found" << endl;
     }
-    bg.setTexture(&bgTexture);
-    bg.setPosition(Vector2f(0, 0));
-    bg.setSize(Vector2f(window.getSize().x, window.getSize().y));
+    RectangleShape bg = initBg(window);
+    bg.setTexture(&texture);
 
     while (window.isOpen()) {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == Event::Closed)
                 window.close();
         }
 
         window.clear();
         window.draw(bg);
         window.display();
+        sleep(milliseconds(1000 / 60));
     }
 
     return 0;
