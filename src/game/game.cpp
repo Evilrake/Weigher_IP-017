@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+ï»¿#include <SFML/Graphics.hpp>
 #include <bg.h>
 #include <iostream>
 #include <string>
@@ -12,6 +12,15 @@ struct keyboardSymbol {
     string str;
     string folder;
 };
+
+void checkClick(vector<keyboardSymbol> keyboardSymbols, int x, int y)
+{
+    for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
+        if (keyboardSymbols[i].shape.getGlobalBounds().contains(x, y)) {
+            cout << keyboardSymbols[i].str;
+        }
+    }
+}
 
 void drawKeyboard(RenderWindow& window, vector<keyboardSymbol>& keyboardSymbols)
 {
@@ -28,9 +37,10 @@ void drawKeyboard(RenderWindow& window, vector<keyboardSymbol>& keyboardSymbols)
 void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
 {
     string symbols[33]
-            = {"à", "á", "â", "ã", "ä", "å", "¸", "æ", "ç", "è", "é",
-               "ê", "ë", "ì", "í", "î", "ï", "ð", "ñ", "ò", "ó", "ô",
-               "õ", "ö", "÷", "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ"};
+            = {"Ã ", "Ã¡", "Ã¢", "Ã£", "Ã¤", "Ã¥", "Â¸", "Ã¦", "Ã§", "Ã¨", "Ã©",
+               "Ãª", "Ã«", "Ã¬", "Ã­", "Ã®", "Ã¯", "Ã°", "Ã±", "Ã²", "Ã³", "Ã´",
+               "Ãµ", "Ã¶", "Ã·", "Ã¸", "Ã¹", "Ãº", "Ã»", "Ã¼", "Ã½", "Ã¾", "Ã¿"};
+    cout << symbols[0];
     for (int i = 0; i < 33; i++) {
         keyboardSymbol currentSymbol;
         currentSymbol.str = symbols[i];
@@ -48,6 +58,7 @@ void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
 
 void startGame(RenderWindow& window, int difficult)
 {
+    setlocale(LC_ALL, "Russian");
     vector<keyboardSymbol> keyboardSymbols;
     initKeyboard(keyboardSymbols);
 
@@ -67,6 +78,10 @@ void startGame(RenderWindow& window, int difficult)
             }
             if (event.type == Event::MouseButtonPressed) {
                 if (event.mouseButton.button == Mouse::Left) {
+                    checkClick(
+                            keyboardSymbols,
+                            event.mouseButton.x,
+                            event.mouseButton.y);
                 }
             }
         }
