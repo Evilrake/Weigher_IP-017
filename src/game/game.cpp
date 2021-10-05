@@ -225,7 +225,7 @@ void drawTheme(RenderWindow& window, string theme)
     window.draw(themeText);
 }
 
-void startGame(RenderWindow& window, string (&words)[3][4])
+int startGame(RenderWindow& window, string (&words)[3][4])
 {
     setlocale(LC_ALL, "Russian");
     vector<keyboardSymbol> keyboardSymbols;
@@ -235,6 +235,7 @@ void startGame(RenderWindow& window, string (&words)[3][4])
     string word = "тигр"; // getRandomWord(words, theme);
     vector<secretSymbol> secretSymbols = initSecretWord(word);
     int step = 0;
+    int win;
 
     // bg
     Texture texture;
@@ -246,7 +247,16 @@ void startGame(RenderWindow& window, string (&words)[3][4])
 
     while (window.isOpen()) {
         if (step > 11) {
-            break;
+            return 0;
+        }
+        win = 1;
+        for (unsigned int i = 0; i < secretSymbols.size(); i++) {
+            if (!secretSymbols[i].open) {
+                win = 0;
+            }
+        }
+        if (win) {
+            return 1;
         }
         Event event;
         while (window.pollEvent(event)) {
@@ -273,4 +283,5 @@ void startGame(RenderWindow& window, string (&words)[3][4])
         window.display();
         sleep(milliseconds(1000 / 60));
     }
+    return 2;
 }

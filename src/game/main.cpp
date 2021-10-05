@@ -27,15 +27,17 @@ int main()
                {"посуда", "графин", "солонка", "противень"},
                {"животные", "киви", "лемур", "геккон"}};
 
+    int win;
     while (1) {
         int difficult = callMenu(window);
         if (difficult == 1) {
-            startGame(window, easyWords);
+            win = startGame(window, easyWords);
         } else if (difficult == 2) {
-            startGame(window, middleWords);
+            win = startGame(window, middleWords);
         } else {
-            startGame(window, hardWords);
+            win = startGame(window, hardWords);
         }
+        cout << win;
     }
 
     return 0;
