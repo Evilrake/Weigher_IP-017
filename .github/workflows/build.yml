@@ -14,3 +14,9 @@ jobs:
 
       - name: Build application
         run: sudo apt install libsfml-dev && make
+
+      - name: Build test
+        run: sudo apt install libsfml-dev && make test
+
+      - name: Run test
+        run: ./bin/test
