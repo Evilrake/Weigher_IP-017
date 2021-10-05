@@ -10,6 +10,7 @@ using namespace sf;
 
 int main()
 {
+    srand(time(NULL));
     RenderWindow window(sf::VideoMode(1000, 600), "Weigher game");
 
     vector<vector<string>> words;
@@ -37,7 +38,6 @@ int main()
         } else {
             win = startGame(window, hardWords);
         }
-        cout << win;
     }
 
     return 0;
