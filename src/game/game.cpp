@@ -1,23 +1,12 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <bg.h>
+#include <game.h>
 #include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 using namespace sf;
-
-struct keyboardSymbol {
-    RectangleShape shape;
-    string str;
-    string folder;
-    bool active = true;
-};
-
-struct secretSymbol {
-    string str;
-    bool open;
-};
 
 vector<secretSymbol> initSecretWord(string word)
 {
