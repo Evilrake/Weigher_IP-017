@@ -156,9 +156,11 @@ void checkClick(
         int& step)
 {
     for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
-        if (keyboardSymbols[i].shape.getGlobalBounds().contains(x, y)) {
-            keyboardSymbols[i].active = false;
-            openSecretSymbols(secretSymbols, keyboardSymbols[i].str, step);
+        if (keyboardSymbols[i].active) {
+            if (keyboardSymbols[i].shape.getGlobalBounds().contains(x, y)) {
+                keyboardSymbols[i].active = false;
+                openSecretSymbols(secretSymbols, keyboardSymbols[i].str, step);
+            }
         }
     }
 }
@@ -228,6 +230,9 @@ void startGame(RenderWindow& window, string (&words)[3][4])
     bg.setTexture(&texture);
 
     while (window.isOpen()) {
+        if (step > 11) {
+            break;
+        }
         Event event;
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed) {
