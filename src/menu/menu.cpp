@@ -49,7 +49,7 @@ int callChooseDifficultMenu(RenderWindow& window)
     easyButtonText.setCharacterSize(40);
     easyButtonText.setFillColor(Color::Black);
     easyButtonText.setPosition(Vector2f(50, 50));
-    easyButtonText.setString(L"Лёгкий");
+    easyButtonText.setString(L"Легкий");
 
     Text middleButtonText;
     middleButtonText.setFont(font);
@@ -63,7 +63,7 @@ int callChooseDifficultMenu(RenderWindow& window)
     hardButtonText.setCharacterSize(40);
     hardButtonText.setFillColor(Color::Black);
     hardButtonText.setPosition(Vector2f(50, 250));
-    hardButtonText.setString(L"Трудный");
+    hardButtonText.setString(L"Тяжелый");
 
     while (!difficult) {
         Event event;
