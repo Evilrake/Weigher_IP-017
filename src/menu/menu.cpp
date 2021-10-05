@@ -49,21 +49,21 @@ int callChooseDifficultMenu(RenderWindow& window)
     easyButtonText.setCharacterSize(40);
     easyButtonText.setFillColor(Color::Black);
     easyButtonText.setPosition(Vector2f(50, 50));
-    easyButtonText.setString(L"Легкий");
+    easyButtonText.setString(L"Р›РµРіРєРёР№");
 
     Text middleButtonText;
     middleButtonText.setFont(font);
     middleButtonText.setCharacterSize(40);
     middleButtonText.setFillColor(Color::Black);
     middleButtonText.setPosition(Vector2f(50, 150));
-    middleButtonText.setString(L"Средний");
+    middleButtonText.setString(L"РЎСЂРµРґРЅРёР№");
 
     Text hardButtonText;
     hardButtonText.setFont(font);
     hardButtonText.setCharacterSize(40);
     hardButtonText.setFillColor(Color::Black);
     hardButtonText.setPosition(Vector2f(50, 250));
-    hardButtonText.setString(L"Тяжелый");
+    hardButtonText.setString(L"РўСЏР¶РµР»С‹Р№");
 
     while (!difficult) {
         Event event;
@@ -132,7 +132,7 @@ int callMenu(RenderWindow& window)
     startButtonText.setCharacterSize(40);
     startButtonText.setFillColor(Color::Black);
     startButtonText.setPosition(50, 50);
-    startButtonText.setString(L"Начать игру");
+    startButtonText.setString(L"РќР°С‡Р°С‚СЊ РёРіСЂСѓ");
 
     while (window.isOpen()) {
         if (difficult) {
