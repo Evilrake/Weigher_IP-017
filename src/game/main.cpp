@@ -7,7 +7,7 @@ using namespace sf;
 
 int main()
 {
-    RenderWindow window(sf::VideoMode(1000, 600), "Weigher game");
+    RenderWindow window(sf::VideoMode(1000, 600), "Weigher Game");
 
     callMenu(window);
 
