@@ -59,8 +59,8 @@ void drawSecretSymbols(RenderWindow& window, vector<secretSymbol> secretSymbols)
 
 void drawWeigher(RenderWindow& window, int step)
 {
-    int x = 100;
-    int y = 100;
+    int x = 50;
+    int y = 50;
     RectangleShape currentShape;
     currentShape.setFillColor(Color(80, 130, 255));
     CircleShape currentCircleShape;
@@ -197,7 +197,7 @@ void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
 
         currentShape.setSize(Vector2f(50, 50));
         currentShape.setPosition(
-                Vector2f((i % 10) * 60 + 100, 100 + (i / 10 * 100)));
+                Vector2f((i % 10) * 60 + 200, 320 + (i / 10 * 70)));
         currentSymbol.shape = currentShape;
         keyboardSymbols.push_back(currentSymbol);
     }
