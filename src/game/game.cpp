@@ -13,6 +13,49 @@ struct keyboardSymbol {
     string folder;
 };
 
+struct secretSymbol {
+    string str;
+    bool open;
+};
+
+vector<secretSymbol> initSecretWord(string word)
+{
+    vector<secretSymbol> secretSymbols;
+    for (unsigned int i = 0; i < word.size(); i++) {
+        secretSymbol currentSecretSymbol;
+        currentSecretSymbol.str = word[i];
+        currentSecretSymbol.open = true;
+        secretSymbols.push_back(currentSecretSymbol);
+    }
+    return secretSymbols;
+}
+
+void drawSecretSymbols(RenderWindow& window, vector<secretSymbol> secretSymbols)
+{
+    RectangleShape underline;
+    underline.setFillColor(Color(80, 130, 255));
+    underline.setSize(Vector2f(30, 3));
+
+    Font font;
+    if (!font.loadFromFile("fonts/font.ttf")) {
+        cout << "Error, fonts/font.ttf not found" << endl;
+    }
+    Text symbol;
+    symbol.setFont(font);
+    symbol.setCharacterSize(25);
+    symbol.setFillColor(Color::Black);
+
+    for (unsigned int i = 0; i < secretSymbols.size(); i++) {
+        underline.setPosition(Vector2f(600 + i * 50, 200));
+        if (secretSymbols[i].open) {
+            symbol.setPosition(Vector2f(605 + i * 50, 170));
+            symbol.setString(secretSymbols[i].str);
+            window.draw(symbol);
+        }
+        window.draw(underline);
+    }
+}
+
 void drawWeigher(RenderWindow& window, int step)
 {
     int x = 100;
@@ -131,13 +174,24 @@ void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
     }
 }
 
-void startGame(RenderWindow& window, int difficult)
+string getRandomWord(string (&words)[3][4], string& theme)
+{
+    int a = rand() % 3;
+    theme = words[a][0];
+    return words[a][rand() % 3 + 1];
+}
+
+void startGame(RenderWindow& window, string (&words)[3][4])
 {
     setlocale(LC_ALL, "Russian");
     vector<keyboardSymbol> keyboardSymbols;
     initKeyboard(keyboardSymbols);
 
+    string theme;
+    string word = getRandomWord(words, theme);
+    vector<secretSymbol> secretSymbols = initSecretWord(word);
     int step = 12;
+
     // bg
     Texture texture;
     if (!texture.loadFromFile("images/bg.jpg")) {
@@ -165,6 +219,7 @@ void startGame(RenderWindow& window, int difficult)
         window.clear();
         window.draw(bg);
         // drawKeyboard(window, keyboardSymbols);
+        drawSecretSymbols(window, secretSymbols);
         drawWeigher(window, step);
         window.display();
         sleep(milliseconds(1000 / 60));
