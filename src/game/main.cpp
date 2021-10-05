@@ -29,7 +29,7 @@ int main()
 
     int win;
     while (1) {
-        int difficult = callMenu(window);
+        int difficult = callMenu(window, win);
         if (difficult == 1) {
             win = startGame(window, easyWords);
         } else if (difficult == 2) {

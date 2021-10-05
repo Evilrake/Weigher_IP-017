@@ -103,8 +103,24 @@ int callChooseDifficultMenu(RenderWindow& window)
     return difficult;
 }
 
-int callMenu(RenderWindow& window)
+int callMenu(RenderWindow& window, int win)
 {
+    Font font;
+    if (!font.loadFromFile("fonts/font.ttf")) {
+        cout << "Error, fonts/font.ttf not found" << endl;
+    }
+    Text winText;
+    winText.setFont(font);
+    winText.setCharacterSize(40);
+    winText.setPosition(400, 100);
+
+    if (win == 1) {
+        winText.setFillColor(Color::Green);
+        winText.setString(L"Вы выиграли!");
+    } else if (win == 0) {
+        winText.setFillColor(Color::Red);
+        winText.setString(L"Вы проиграли!");
+    }
     int difficult = 0;
     // bg
     Texture texture;
@@ -123,10 +139,6 @@ int callMenu(RenderWindow& window)
     startButton.setOutlineThickness(5);
 
     // buttonText
-    Font font;
-    if (!font.loadFromFile("fonts/font.ttf")) {
-        cout << "Error, fonts/font.ttf not found" << endl;
-    }
     Text startButtonText;
     startButtonText.setFont(font);
     startButtonText.setCharacterSize(40);
@@ -157,6 +169,7 @@ int callMenu(RenderWindow& window)
         window.draw(bg);
         window.draw(startButton);
         window.draw(startButtonText);
+        window.draw(wintext);
         window.display();
         sleep(milliseconds(1000 / 60));
     }
