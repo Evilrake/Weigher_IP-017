@@ -169,7 +169,7 @@ int callMenu(RenderWindow& window, int win)
         window.draw(bg);
         window.draw(startButton);
         window.draw(startButtonText);
-        window.draw(wintext);
+        window.draw(winText);
         window.display();
         sleep(milliseconds(1000 / 60));
     }
