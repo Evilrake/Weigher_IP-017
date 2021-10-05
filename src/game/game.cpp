@@ -132,13 +132,19 @@ void drawWeigher(RenderWindow& window, int step)
     }
 }
 
-void openSecretSymbols(vector<secretSymbol>& secretSymbols, string symbol)
+void openSecretSymbols(
+        vector<secretSymbol>& secretSymbols, string symbol, int& step)
 {
+    bool right = false;
     for (unsigned int i = 0; i < secretSymbols.size(); i++) {
         cout << secretSymbols[i].str << " - " << symbol << endl;
         if (secretSymbols[i].str == symbol) {
             secretSymbols[i].open = true;
+            right = true;
         }
+    }
+    if (!right) {
+        step++;
     }
 }
 
@@ -146,11 +152,12 @@ void checkClick(
         vector<keyboardSymbol> keyboardSymbols,
         int x,
         int y,
-        vector<secretSymbol>& secretSymbols)
+        vector<secretSymbol>& secretSymbols,
+        int& step)
 {
     for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
         if (keyboardSymbols[i].shape.getGlobalBounds().contains(x, y)) {
-            openSecretSymbols(secretSymbols, keyboardSymbols[i].str);
+            openSecretSymbols(secretSymbols, keyboardSymbols[i].str, step);
         }
     }
 }
@@ -204,7 +211,7 @@ void startGame(RenderWindow& window, string (&words)[3][4])
     string theme;
     string word = "тигр"; // getRandomWord(words, theme);
     vector<secretSymbol> secretSymbols = initSecretWord(word);
-    int step = 12;
+    int step = 0;
 
     // bg
     Texture texture;
@@ -226,7 +233,8 @@ void startGame(RenderWindow& window, string (&words)[3][4])
                             keyboardSymbols,
                             event.mouseButton.x,
                             event.mouseButton.y,
-                            secretSymbols);
+                            secretSymbols,
+                            step);
                 }
             }
         }
