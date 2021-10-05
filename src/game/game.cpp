@@ -13,6 +13,82 @@ struct keyboardSymbol {
     string folder;
 };
 
+void drawWeigher(RenderWindow& window, int step)
+{
+    int x = 100;
+    int y = 100;
+    RectangleShape currentShape;
+    currentShape.setFillColor(Color(80, 130, 255));
+    CircleShape currentCircleShape;
+    currentCircleShape.setOutlineColor(Color(80, 130, 255));
+    currentCircleShape.setFillColor(Color(0, 0, 0, 0));
+    currentCircleShape.setOutlineThickness(10);
+    if (step >= 1) {
+        currentShape.setPosition(Vector2f(x, y));
+        currentShape.setSize(Vector2f(10, 300));
+        currentShape.setRotation(0);
+        window.draw(currentShape);
+    }
+    if (step >= 2) {
+        currentShape.setPosition(Vector2f(x, y));
+        currentShape.setSize(Vector2f(200, 10));
+        currentShape.setRotation(0);
+        window.draw(currentShape);
+    }
+    if (step >= 3) {
+        currentShape.setPosition(Vector2f(x + 45, y + 10));
+        currentShape.setSize(Vector2f(10, 50));
+        currentShape.setRotation(45);
+        window.draw(currentShape);
+    }
+    if (step >= 4) {
+        currentShape.setPosition(Vector2f(x - 40, y + 300));
+        currentShape.setSize(Vector2f(100, 10));
+        currentShape.setRotation(0);
+        window.draw(currentShape);
+    }
+    if (step >= 5) {
+        currentShape.setPosition(Vector2f(x + 195, y));
+        currentShape.setSize(Vector2f(10, 50));
+        currentShape.setRotation(0);
+        window.draw(currentShape);
+    }
+    if (step >= 6) {
+        currentCircleShape.setPosition(Vector2f(x + 175, y + 50));
+        currentCircleShape.setRadius(25);
+        window.draw(currentCircleShape);
+    }
+    if (step >= 7) {
+        currentCircleShape.setPosition(Vector2f(x + 150, y + 115));
+        currentCircleShape.setRadius(50);
+        window.draw(currentCircleShape);
+    }
+    if (step >= 8) {
+        currentShape.setPosition(Vector2f(x + 280, y + 100));
+        currentShape.setSize(Vector2f(50, 10));
+        currentShape.setRotation(150);
+        window.draw(currentShape);
+    }
+    if (step >= 9) {
+        currentShape.setPosition(Vector2f(x + 120, y + 90));
+        currentShape.setSize(Vector2f(50, 10));
+        currentShape.setRotation(40);
+        window.draw(currentShape);
+    }
+    if (step >= 10) {
+        currentShape.setPosition(Vector2f(x + 240, y + 200));
+        currentShape.setSize(Vector2f(70, 10));
+        currentShape.setRotation(40);
+        window.draw(currentShape);
+    }
+    if (step >= 11) {
+        currentShape.setPosition(Vector2f(x + 170, y + 210));
+        currentShape.setSize(Vector2f(70, 10));
+        currentShape.setRotation(150);
+        window.draw(currentShape);
+    }
+}
+
 void checkClick(vector<keyboardSymbol> keyboardSymbols, int x, int y)
 {
     for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
@@ -40,7 +116,6 @@ void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
             = {"à", "á", "â", "ã", "ä", "å", "¸", "æ", "ç", "è", "é",
                "ê", "ë", "ì", "í", "î", "ï", "ð", "ñ", "ò", "ó", "ô",
                "õ", "ö", "÷", "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ"};
-    cout << symbols[0];
     for (int i = 0; i < 33; i++) {
         keyboardSymbol currentSymbol;
         currentSymbol.str = symbols[i];
@@ -62,6 +137,7 @@ void startGame(RenderWindow& window, int difficult)
     vector<keyboardSymbol> keyboardSymbols;
     initKeyboard(keyboardSymbols);
 
+    int step = 12;
     // bg
     Texture texture;
     if (!texture.loadFromFile("images/bg.jpg")) {
@@ -88,7 +164,8 @@ void startGame(RenderWindow& window, int difficult)
 
         window.clear();
         window.draw(bg);
-        drawKeyboard(window, keyboardSymbols);
+        // drawKeyboard(window, keyboardSymbols);
+        drawWeigher(window, step);
         window.display();
         sleep(milliseconds(1000 / 60));
     }
