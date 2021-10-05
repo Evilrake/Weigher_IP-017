@@ -225,6 +225,16 @@ void drawTheme(RenderWindow& window, string theme)
     window.draw(themeText);
 }
 
+int checkWin(vector<secretSymbol> secretSymbols)
+{
+    for (unsigned int i = 0; i < secretSymbols.size(); i++) {
+        if (!secretSymbols[i].open) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 int startGame(RenderWindow& window, string (&words)[3][4])
 {
     setlocale(LC_ALL, "Russian");
@@ -249,12 +259,8 @@ int startGame(RenderWindow& window, string (&words)[3][4])
         if (step > 11) {
             return 0;
         }
-        win = 1;
-        for (unsigned int i = 0; i < secretSymbols.size(); i++) {
-            if (!secretSymbols[i].open) {
-                win = 0;
-            }
-        }
+        win = checkWin(secretSymbols);
+
         if (win) {
             return 1;
         }
