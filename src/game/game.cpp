@@ -210,6 +210,21 @@ string getRandomWord(string (&words)[3][4], string& theme)
     return words[a][rand() % 3 + 1];
 }
 
+void drawTheme(RenderWindow& window, string theme)
+{
+    Font font;
+    if (!font.loadFromFile("fonts/font.ttf")) {
+        cout << "Error, fonts/font.ttf not found" << endl;
+    }
+    Text themeText;
+    themeText.setFont(font);
+    themeText.setCharacterSize(25);
+    themeText.setFillColor(Color::Black);
+    themeText.setPosition(400, 40);
+    themeText.setString("Òåìà: " + theme);
+    window.draw(themeText);
+}
+
 void startGame(RenderWindow& window, string (&words)[3][4])
 {
     setlocale(LC_ALL, "Russian");
