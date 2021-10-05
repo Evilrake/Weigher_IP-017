@@ -3,17 +3,21 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 using namespace std;
 using namespace sf;
+
 struct keyboardSymbol {
     RectangleShape shape;
     string str;
     string folder;
 };
+
 struct secretSymbol {
     string str;
     bool open;
 };
+
 vector<secretSymbol> initSecretWord(string word)
 {
     vector<secretSymbol> secretSymbols;
@@ -24,14 +28,14 @@ vector<secretSymbol> initSecretWord(string word)
         secretSymbols.push_back(currentSecretSymbol);
     }
     return secretSymbols;
-
-    @ @-132, 11 + 132, 25 @ @ void drawWeigher(RenderWindow & window, int step)
 }
+
 void drawSecretSymbols(RenderWindow& window, vector<secretSymbol> secretSymbols)
 {
     RectangleShape underline;
     underline.setFillColor(Color(80, 130, 255));
     underline.setSize(Vector2f(30, 3));
+
     Font font;
     if (!font.loadFromFile("fonts/font.ttf")) {
         cout << "Error, fonts/font.ttf not found" << endl;
@@ -40,6 +44,7 @@ void drawSecretSymbols(RenderWindow& window, vector<secretSymbol> secretSymbols)
     symbol.setFont(font);
     symbol.setCharacterSize(25);
     symbol.setFillColor(Color::Black);
+
     for (unsigned int i = 0; i < secretSymbols.size(); i++) {
         underline.setPosition(Vector2f(600 + i * 50, 200));
         if (secretSymbols[i].open) {
@@ -50,6 +55,7 @@ void drawSecretSymbols(RenderWindow& window, vector<secretSymbol> secretSymbols)
         window.draw(underline);
     }
 }
+
 void drawWeigher(RenderWindow& window, int step)
 {
     int x = 100;
@@ -149,12 +155,7 @@ void checkClick(
     }
 }
 
-@ @-188, 7 + 202,
-        7 @ @ void startGame(RenderWindow& window, string (&words)[3][4])
-
-                void drawKeyboard(
-                        RenderWindow& window,
-                        vector<keyboardSymbol>& keyboardSymbols)
+void drawKeyboard(RenderWindow& window, vector<keyboardSymbol>& keyboardSymbols)
 {
     for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
         Texture texture;
@@ -165,6 +166,7 @@ void checkClick(
         window.draw(keyboardSymbols[i].shape);
     }
 }
+
 void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
 {
     string symbols[33]
@@ -174,8 +176,10 @@ void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
     for (int i = 0; i < 33; i++) {
         keyboardSymbol currentSymbol;
         currentSymbol.str = symbols[i];
+
         currentSymbol.folder = "images/" + to_string(i + 1) + ".png";
         RectangleShape currentShape;
+
         currentShape.setSize(Vector2f(50, 50));
         currentShape.setPosition(
                 Vector2f((i % 10) * 60 + 100, 100 + (i / 10 * 100)));
@@ -183,12 +187,14 @@ void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
         keyboardSymbols.push_back(currentSymbol);
     }
 }
+
 string getRandomWord(string (&words)[3][4], string& theme)
 {
     int a = rand() % 3;
     theme = words[a][0];
     return words[a][rand() % 3 + 1];
 }
+
 void startGame(RenderWindow& window, string (&words)[3][4])
 {
     setlocale(LC_ALL, "Russian");
@@ -196,20 +202,18 @@ void startGame(RenderWindow& window, string (&words)[3][4])
     initKeyboard(keyboardSymbols);
 
     string theme;
-    string word = "òèãð"; // getRandomWord(words, theme);
+    string word = "тигр"; // getRandomWord(words, theme);
     vector<secretSymbol> secretSymbols = initSecretWord(word);
     int step = 12;
 
-    @ @-211, 14 + 225,
-            15 @ @ void startGame(RenderWindow & window, string(&words)[3][4])
-
-            // bg
-            Texture texture;
+    // bg
+    Texture texture;
     if (!texture.loadFromFile("images/bg.jpg")) {
         cout << "Error, images/bg.jpg not found" << endl;
     }
     RectangleShape bg = initBg(window);
     bg.setTexture(&texture);
+
     while (window.isOpen()) {
         Event event;
         while (window.pollEvent(event)) {
@@ -233,7 +237,6 @@ void startGame(RenderWindow& window, string (&words)[3][4])
         drawSecretSymbols(window, secretSymbols);
         drawWeigher(window, step);
         window.display();
-
         sleep(milliseconds(1000 / 60));
     }
 }
