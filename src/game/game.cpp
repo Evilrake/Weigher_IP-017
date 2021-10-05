@@ -11,6 +11,7 @@ struct keyboardSymbol {
     RectangleShape shape;
     string str;
     string folder;
+    bool active = true;
 };
 
 struct secretSymbol {
@@ -137,7 +138,6 @@ void openSecretSymbols(
 {
     bool right = false;
     for (unsigned int i = 0; i < secretSymbols.size(); i++) {
-        cout << secretSymbols[i].str << " - " << symbol << endl;
         if (secretSymbols[i].str == symbol) {
             secretSymbols[i].open = true;
             right = true;
@@ -149,7 +149,7 @@ void openSecretSymbols(
 }
 
 void checkClick(
-        vector<keyboardSymbol> keyboardSymbols,
+        vector<keyboardSymbol>& keyboardSymbols,
         int x,
         int y,
         vector<secretSymbol>& secretSymbols,
@@ -157,6 +157,7 @@ void checkClick(
 {
     for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
         if (keyboardSymbols[i].shape.getGlobalBounds().contains(x, y)) {
+            keyboardSymbols[i].active = false;
             openSecretSymbols(secretSymbols, keyboardSymbols[i].str, step);
         }
     }
@@ -170,7 +171,12 @@ void drawKeyboard(RenderWindow& window, vector<keyboardSymbol>& keyboardSymbols)
             cout << "Error, " + keyboardSymbols[i].folder + " not found";
         }
         keyboardSymbols[i].shape.setTexture(&texture);
-        window.draw(keyboardSymbols[i].shape);
+        if (keyboardSymbols[i].active) {
+            keyboardSymbols[i].shape.setFillColor(Color(255, 255, 255, 255));
+            window.draw(keyboardSymbols[i].shape);
+        } else {
+            keyboardSymbols[i].shape.setFillColor(Color(255, 255, 255, 127));
+        }
     }
 }
 
