@@ -8,39 +8,48 @@ using namespace std;
 using namespace sf;
 
 struct keyboardSymbol {
+    RectangleShape shape;
     string str;
     string folder;
 };
 
-void drawKeyboard(RenderWindow& window, vector<keyboardSymbol> keyboardSymbols)
+void drawKeyboard(RenderWindow& window, vector<keyboardSymbol>& keyboardSymbols)
 {
     for (unsigned int i = 0; i < keyboardSymbols.size(); i++) {
-        RectangleShape currentSymbol;
         Texture texture;
         if (!texture.loadFromFile(keyboardSymbols[i].folder)) {
             cout << "Error, " + keyboardSymbols[i].folder + " not found";
         }
-        currentSymbol.setTexture(&texture);
-        currentSymbol.setSize(Vector2f(50, 50));
-        currentSymbol.setPosition(
-                Vector2f((i % 10) * 60 + 100, 100 + (i / 10 * 100)));
-        window.draw(currentSymbol);
+        keyboardSymbols[i].shape.setTexture(&texture);
+        window.draw(keyboardSymbols[i].shape);
     }
 }
 
-void startGame(RenderWindow& window, int difficult)
+void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
 {
     string symbols[33]
             = {"à", "á", "â", "ã", "ä", "å", "¸", "æ", "ç", "è", "é",
                "ê", "ë", "ì", "í", "î", "ï", "ð", "ñ", "ò", "ó", "ô",
                "õ", "ö", "÷", "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ"};
-    vector<keyboardSymbol> keyboardSymbols;
     for (int i = 0; i < 33; i++) {
         keyboardSymbol currentSymbol;
         currentSymbol.str = symbols[i];
+
         currentSymbol.folder = "images/" + to_string(i + 1) + ".png";
+        RectangleShape currentShape;
+
+        currentShape.setSize(Vector2f(50, 50));
+        currentShape.setPosition(
+                Vector2f((i % 10) * 60 + 100, 100 + (i / 10 * 100)));
+        currentSymbol.shape = currentShape;
         keyboardSymbols.push_back(currentSymbol);
     }
+}
+
+void startGame(RenderWindow& window, int difficult)
+{
+    vector<keyboardSymbol> keyboardSymbols;
+    initKeyboard(keyboardSymbols);
 
     // bg
     Texture texture;
