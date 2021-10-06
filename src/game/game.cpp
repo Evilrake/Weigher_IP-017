@@ -210,7 +210,7 @@ void drawTheme(RenderWindow& window, string theme)
     themeText.setCharacterSize(25);
     themeText.setFillColor(Color::Black);
     themeText.setPosition(400, 40);
-    themeText.setString("Òåìà: " + theme);
+    themeText.setString("Тема: " + theme);
     window.draw(themeText);
 }
 
