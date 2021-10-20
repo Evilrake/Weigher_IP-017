@@ -1,4 +1,4 @@
-п»ї#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <bg.h>
 #include <game.h>
 #include <iostream>
@@ -174,9 +174,9 @@ void drawKeyboard(RenderWindow& window, vector<keyboardSymbol>& keyboardSymbols)
 void initKeyboard(vector<keyboardSymbol>& keyboardSymbols)
 {
     string symbols[33]
-            = {"Р°", "Р±", "РІ", "Рі", "Рґ", "Рµ", "С‘", "Р¶", "Р·", "Рё", "Р№",
-               "Рє", "Р»", "Рј", "РЅ", "Рѕ", "Рї", "СЂ", "СЃ", "С‚", "Сѓ", "С„",
-               "С…", "С†", "С‡", "С€", "С‰", "СЉ", "С‹", "СЊ", "СЌ", "СЋ", "СЏ"};
+            = {"а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й",
+               "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф",
+               "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"};
     for (int i = 0; i < 33; i++) {
         keyboardSymbol currentSymbol;
         currentSymbol.str = symbols[i];
@@ -210,7 +210,7 @@ void drawTheme(RenderWindow& window, string theme)
     themeText.setCharacterSize(25);
     themeText.setFillColor(Color::Black);
     themeText.setPosition(400, 40);
-    themeText.setString("РўРµРјР°: " + theme);
+    themeText.setString("Тема: " + theme);
     window.draw(themeText);
 }
 
@@ -231,7 +231,8 @@ int startGame(RenderWindow& window, string (&words)[3][4])
     initKeyboard(keyboardSymbols);
 
     string theme;
-    string word = "С‚РёРіСЂ"; // getRandomWord(words, theme);
+    string word = getRandomWord(words, theme);
+
     vector<secretSymbol> secretSymbols = initSecretWord(word);
     int step = 0;
     int win;
@@ -275,6 +276,7 @@ int startGame(RenderWindow& window, string (&words)[3][4])
         drawKeyboard(window, keyboardSymbols);
         drawSecretSymbols(window, secretSymbols);
         drawWeigher(window, step);
+        drawTheme(window, theme);
         window.display();
         sleep(milliseconds(1000 / 60));
     }
