@@ -13,7 +13,7 @@ jobs:
         run: git ls-files *.{cpp,h} | xargs clang-format -i && git diff --exit-code
 
       - name: Build application
-        run: sudo apt-get clean && sudo apt install libsfml-dev && apt-get install —fix-missing && make
+        run: sudo apt-get clean && sudo apt-get update && sudo apt install libsfml-dev && sudo apt-get install --fix-missing && make
 
       - name: Build test
         run: sudo apt install libsfml-dev && make test
