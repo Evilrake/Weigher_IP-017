@@ -6,6 +6,7 @@
 #include <vector>
 
 using namespace std;
+
 using namespace sf;
 
 vector<secretSymbol> initSecretWord(string word)
